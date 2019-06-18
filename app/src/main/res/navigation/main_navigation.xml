@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/main_navigation" app:startDestination="@id/pokemonListFragment">
+
+    <fragment android:id="@+id/berryListFragment"
+              android:name="com.benboonya.pokemoninfo.berries.ui.list.BerryListFragment"
+              android:label="BerryListFragment"
+              tools:layout="@layout/berry_list_fragment"/>
+    <fragment android:id="@+id/pokemonListFragment"
+              android:name="com.benboonya.pokemoninfo.pokemon.ui.list.PokemonListFragment"
+              android:label="PokemonListFragment"
+              tools:layout="@layout/pokemon_list_fragment"/>
+</navigation>
