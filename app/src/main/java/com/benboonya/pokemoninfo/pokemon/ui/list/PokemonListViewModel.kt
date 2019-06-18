@@ -1,3 +1,8 @@
-package com.benboonya.pokemoninfo.pokemon.list
+package com.benboonya.pokemoninfo.pokemon.ui.list
 
-class PokemonListViewModel
+import androidx.lifecycle.ViewModel
+import com.benboonya.pokemoninfo.pokemon.usecase.GetPokenListUseCase
+
+class PokemonListViewModel(private val getPokenListUseCase: GetPokenListUseCase): ViewModel() {
+
+}
