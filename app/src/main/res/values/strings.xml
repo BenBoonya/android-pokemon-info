@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Pokemon Info</string>
+    <string name="message_generic_error">Please try again later</string>
 </resources>
