@@ -33,16 +33,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         navView.setNavigationItemSelectedListener(this)
-
-        supportFragmentManager.beginTransaction().replace(R.id.container, PokemonListFragment.newInstance()).commit()
-    }
-
-    override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
+        onNavigationItemSelected(navView.menu.findItem(R.id.pokemonListFragment))
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -53,6 +44,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }?.let {
             supportFragmentManager.beginTransaction().replace(R.id.container, it).commit()
             drawerLayout.closeDrawer(GravityCompat.START)
+            item.isChecked = true
+            title = item.title
         }
         return true
     }
