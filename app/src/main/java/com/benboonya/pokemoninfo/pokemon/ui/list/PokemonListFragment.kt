@@ -15,6 +15,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PokemonListFragment : Fragment() {
 
+    companion object {
+        fun newInstance() = PokemonListFragment()
+    }
+
     lateinit var binding: PokemonListFragmentBinding
 
     val viewModel: PokemonListViewModel by viewModel()
@@ -39,9 +43,10 @@ class PokemonListFragment : Fragment() {
             })
 
             networkError.observe(viewLifecycleOwner, Observer {
-                Toast.makeText(context, it
-                        ?: getString(R.string.message_generic_error), Toast.LENGTH_SHORT).show()
-
+                Toast.makeText(
+                    context, it
+                        ?: getString(R.string.message_generic_error), Toast.LENGTH_SHORT
+                ).show()
             })
 
             pokemonList.observe(viewLifecycleOwner, Observer {

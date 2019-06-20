@@ -14,6 +14,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BerryListFragment : Fragment() {
 
+    companion object {
+        fun newInstance() = BerryListFragment()
+    }
+
     lateinit var binding: BerryListFragmentBinding
 
     private val viewModel: BerryListViewModel by viewModel()
@@ -38,8 +42,10 @@ class BerryListFragment : Fragment() {
             })
 
             networkError.observe(viewLifecycleOwner, Observer {
-                android.widget.Toast.makeText(context, it
-                        ?: getString(R.string.message_generic_error), android.widget.Toast.LENGTH_SHORT).show()
+                android.widget.Toast.makeText(
+                    context, it
+                        ?: getString(R.string.message_generic_error), android.widget.Toast.LENGTH_SHORT
+                ).show()
 
             })
 
