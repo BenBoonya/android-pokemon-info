@@ -1,20 +1,17 @@
-package com.benboonya.pokemoninfo.pokemon.repository
+package com.benboonya.pokemoninfo.common.repositpry
 
-import android.nfc.tech.MifareUltralight.PAGE_SIZE
 import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
 import com.benboonya.pokemoninfo.common.Config
 import com.benboonya.pokemoninfo.common.PokemonApi
-import com.benboonya.pokemoninfo.common.model.GenericListItem
 import com.benboonya.pokemoninfo.common.datasource.PagedListDataSourceFactory
+import com.benboonya.pokemoninfo.common.model.GenericListItem
 import com.benboonya.pokemoninfo.common.model.PagedListResult
-
 import java.util.concurrent.Executors
 
-class PokemonRepository(private val pokemonApi: PokemonApi) {
+class PagedListItemRepository(private val pokemonApi: PokemonApi) {
 
-    fun getPokemonList(): PagedListResult<GenericListItem> {
-        val pokemonListDataSourceFactory = PagedListDataSourceFactory("pokemon", pokemonApi)
+    fun getPagedList(dataType: String): PagedListResult<GenericListItem> {
+        val pokemonListDataSourceFactory = PagedListDataSourceFactory(dataType, pokemonApi)
         val result = LivePagedListBuilder(pokemonListDataSourceFactory, Config.PagedList.config)
                 .setFetchExecutor(Executors.newFixedThreadPool(3))
                 .build()

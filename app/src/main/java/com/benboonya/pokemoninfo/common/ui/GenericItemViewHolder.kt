@@ -1,14 +1,14 @@
-package com.benboonya.pokemoninfo.pokemon.ui.list
+package com.benboonya.pokemoninfo.common.ui
 
 import androidx.recyclerview.widget.RecyclerView
 import com.benboonya.pokemoninfo.common.model.GenericListItem
 import com.benboonya.pokemoninfo.databinding.GenericItemViewHolderBinding
 
-class PokemonViewHolder(
+class GenericItemViewHolder(
         private val binding: GenericItemViewHolderBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(pokemon: GenericListItem) {
-        binding.item = pokemon
+    fun bind(item: GenericListItem) {
+        binding.item = item
     }
 }
