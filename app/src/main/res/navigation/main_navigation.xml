@@ -5,10 +5,10 @@
 
     <fragment android:id="@+id/berryListFragment"
               android:name="com.benboonya.pokemoninfo.berries.ui.list.BerryListFragment"
-              android:label="BerryListFragment"
+              android:label="Berry List"
               tools:layout="@layout/berry_list_fragment"/>
     <fragment android:id="@+id/pokemonListFragment"
               android:name="com.benboonya.pokemoninfo.pokemon.ui.list.PokemonListFragment"
-              android:label="PokemonListFragment"
+              android:label="Pokemon List"
               tools:layout="@layout/pokemon_list_fragment"/>
 </navigation>
