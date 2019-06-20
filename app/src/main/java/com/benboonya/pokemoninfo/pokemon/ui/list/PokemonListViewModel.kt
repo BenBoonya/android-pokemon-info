@@ -7,9 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import com.benboonya.pokemoninfo.common.model.GenericListItem
 import com.benboonya.pokemoninfo.common.model.PagedListResult
-import com.benboonya.pokemoninfo.pokemon.usecase.GetPokemonListUseCase
+import com.benboonya.pokemoninfo.common.usecase.GetPagedListUseCase
 
-class PokemonListViewModel(private val getPokemonListUseCase: GetPokemonListUseCase) : ViewModel() {
+class PokemonListViewModel(private val getPokemonListUseCase: GetPagedListUseCase) : ViewModel() {
 
     private val pagedListResult: MutableLiveData<PagedListResult<GenericListItem>> = MutableLiveData()
 
@@ -24,6 +24,6 @@ class PokemonListViewModel(private val getPokemonListUseCase: GetPokemonListUseC
     }
 
     fun getPokemonList() {
-        pagedListResult.value = getPokemonListUseCase()
+        pagedListResult.value = getPokemonListUseCase("pokemon")
     }
 }

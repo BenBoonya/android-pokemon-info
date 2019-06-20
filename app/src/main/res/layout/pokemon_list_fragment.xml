@@ -9,7 +9,7 @@
 
         <variable
             name="adapter"
-            type="com.benboonya.pokemoninfo.pokemon.ui.list.PokemonListAdapter" />
+            type="com.benboonya.pokemoninfo.common.ui.PagedItemListAdapter" />
 
         <variable
             name="viewModel"

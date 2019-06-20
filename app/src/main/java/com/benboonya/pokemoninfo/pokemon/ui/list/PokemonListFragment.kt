@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.benboonya.pokemoninfo.R
+import com.benboonya.pokemoninfo.common.ui.PagedItemListAdapter
 import com.benboonya.pokemoninfo.databinding.PokemonListFragmentBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -22,7 +23,7 @@ class PokemonListFragment : Fragment() {
         binding = PokemonListFragmentBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.adapter = PokemonListAdapter()
+        binding.adapter = PagedItemListAdapter()
         return binding.root
     }
 
