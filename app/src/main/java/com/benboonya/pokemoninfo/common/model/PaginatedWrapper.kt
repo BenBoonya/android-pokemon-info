@@ -1,4 +1,4 @@
-package com.benboonya.pokemoninfo.common.modei
+package com.benboonya.pokemoninfo.common.model
 
 data class PaginatedWrapper<T>(
     val count: Int,
