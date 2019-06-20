@@ -33,7 +33,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/pokemon_item_view_holder" />
+            tools:listitem="@layout/generic_item_view_holder" />
 
         <ProgressBar
             android:id="@+id/progressBar"

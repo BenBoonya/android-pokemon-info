@@ -1,16 +1,17 @@
 package com.benboonya.pokemoninfo.common
 
-import com.benboonya.pokemoninfo.common.modei.PaginatedWrapper
-import com.benboonya.pokemoninfo.pokemon.model.Pokemon
+import com.benboonya.pokemoninfo.common.model.GenericListItem
+import com.benboonya.pokemoninfo.common.model.PaginatedWrapper
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Url
 
 interface PokemonApi {
 
-    @GET("pokemon")
-    fun getInitialPokemonList(): Call<PaginatedWrapper<Pokemon>>
+    @GET("{data_type}")
+    fun getInitialDataList(@Path(value = "data_type") dataType: String): Call<PaginatedWrapper<GenericListItem>>
 
     @GET
-    fun getPokemonList(@Url url: String): Call<PaginatedWrapper<Pokemon>>
+    fun getDataList(@Url url: String): Call<PaginatedWrapper<GenericListItem>>
 }
