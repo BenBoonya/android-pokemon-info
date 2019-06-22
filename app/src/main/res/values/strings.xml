@@ -3,4 +3,9 @@
     <string name="message_generic_error">Please try again later</string>
     <string name="label_pokemon">Pokemon</string>
     <string name="label_berries">Berries</string>
+    <string name="label_height">Height:</string>
+    <string name="height_value">%.2f Metre</string>
+    <string name="label_weight">Weight:</string>
+    <string name="weight_value">%.2f Kilogram</string>
+    <string name="label_base_exp">Base Exp:</string>
 </resources>

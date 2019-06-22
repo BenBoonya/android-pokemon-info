@@ -5,10 +5,21 @@
 
     <fragment android:id="@+id/berryListFragment"
               android:name="com.benboonya.pokemoninfo.berries.ui.list.BerryListFragment"
-              android:label="Berry List"
+              android:label="@string/label_berries"
               tools:layout="@layout/berry_list_fragment"/>
     <fragment android:id="@+id/pokemonListFragment"
               android:name="com.benboonya.pokemoninfo.pokemon.ui.list.PokemonListFragment"
-              android:label="Pokemon List"
-              tools:layout="@layout/pokemon_list_fragment"/>
+              android:label="@string/label_pokemon"
+              tools:layout="@layout/pokemon_list_fragment">
+        <action android:id="@+id/action_pokemonListFragment_to_pokemonDetailBottomSheet"
+                app:destination="@id/pokemonDetailBottomSheet"/>
+    </fragment>
+
+    <dialog android:id="@+id/pokemonDetailBottomSheet"
+            android:name="com.benboonya.pokemoninfo.pokemon.ui.detail.PokemonDetailBottomSheetDialogFragment"
+            android:label=""
+            tools:layout="@layout/pokemon_detail_bottom_sheet_fragment">
+
+        <argument android:name="url" app:argType="string"/>
+    </dialog>
 </navigation>

@@ -22,7 +22,9 @@ class BerryListFragment : Fragment() {
         binding = BerryListFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        binding.adapter = PagedItemListAdapter()
+        binding.adapter = PagedItemListAdapter {
+
+        }
         return binding.root
     }
 

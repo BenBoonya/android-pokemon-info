@@ -8,7 +8,10 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.benboonya.pokemoninfo.R
+import com.benboonya.pokemoninfo.common.model.GenericListItem
 import com.benboonya.pokemoninfo.common.ui.PagedItemListAdapter
 import com.benboonya.pokemoninfo.databinding.PokemonListFragmentBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -17,13 +20,15 @@ class PokemonListFragment : Fragment() {
 
     lateinit var binding: PokemonListFragmentBinding
 
+    private val navController: NavController by lazy { findNavController() }
+
     val viewModel: PokemonListViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = PokemonListFragmentBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.adapter = PagedItemListAdapter()
+        binding.adapter = PagedItemListAdapter(this::navigateToPokemonDetail)
         return binding.root
     }
 
@@ -39,14 +44,20 @@ class PokemonListFragment : Fragment() {
             })
 
             networkError.observe(viewLifecycleOwner, Observer {
-                Toast.makeText(context, it
-                        ?: getString(R.string.message_generic_error), Toast.LENGTH_SHORT).show()
-
+                Toast.makeText(
+                    context, it
+                        ?: getString(R.string.message_generic_error), Toast.LENGTH_SHORT
+                ).show()
             })
 
             pokemonList.observe(viewLifecycleOwner, Observer {
                 binding.adapter?.submitList(it)
             })
         }
+    }
+
+    private fun navigateToPokemonDetail(item: GenericListItem) {
+        val direction = PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailBottomSheet(item.url)
+        navController.navigate(direction)
     }
 }
