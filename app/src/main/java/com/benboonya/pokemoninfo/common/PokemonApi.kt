@@ -1,5 +1,6 @@
 package com.benboonya.pokemoninfo.common
 
+import com.benboonya.pokemoninfo.berries.model.Berry
 import com.benboonya.pokemoninfo.common.model.GenericListItem
 import com.benboonya.pokemoninfo.common.model.PaginatedWrapper
 import com.benboonya.pokemoninfo.pokemon.model.Pokemon
@@ -18,4 +19,7 @@ interface PokemonApi {
 
     @GET
     fun getPokemonDetail(@Url url: String): Call<Pokemon>
+
+    @GET
+    fun getBerryDetail(@Url url: String): Call<Berry>
 }
