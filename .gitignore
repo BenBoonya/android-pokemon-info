@@ -49,6 +49,7 @@ captures/
 .idea/dictionaries
 .idea/caches
 .idea/navEditor.xml
+.idea/codeStyles/codeStyleConfig.xml
 *.iml
 
 # Keystore files
