@@ -4,18 +4,36 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
 import com.benboonya.pokemoninfo.common.ui.RoundedBottomSheetDialogFragment
+import com.benboonya.pokemoninfo.common.util.ViewModelFactory
 import com.benboonya.pokemoninfo.databinding.PokemonDetailBottomSheetFragmentBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.android.support.DaggerAppCompatDialogFragment
+import javax.inject.Inject
 
 
-class PokemonDetailBottomSheetDialogFragment : RoundedBottomSheetDialogFragment() {
+class PokemonDetailBottomSheetDialogFragment : DaggerAppCompatDialogFragment() {
 
     private lateinit var binding: PokemonDetailBottomSheetFragmentBinding
 
-    private val viewModel: PokemonDetailViewModel by viewModel()
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory<PokemonDetailViewModel>
+    private lateinit var viewModel: PokemonDetailViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel = ViewModelProviders.of(
+            this,
+            viewModelFactory
+        ).get(PokemonDetailViewModel::class.java)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = PokemonDetailBottomSheetFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel.apply {

@@ -5,25 +5,42 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.benboonya.pokemoninfo.R
 import com.benboonya.pokemoninfo.common.model.GenericListItem
 import com.benboonya.pokemoninfo.common.ui.PagedItemListAdapter
+import com.benboonya.pokemoninfo.common.util.ViewModelFactory
 import com.benboonya.pokemoninfo.databinding.BerryListFragmentBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.android.support.DaggerAppCompatDialogFragment
+import javax.inject.Inject
 
-class BerryListFragment : Fragment() {
+class BerryListFragment : DaggerAppCompatDialogFragment() {
 
     lateinit var binding: BerryListFragmentBinding
 
-    private val viewModel: BerryListViewModel by viewModel()
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory<BerryListViewModel>
+    private lateinit var viewModel: BerryListViewModel
 
     private val navController: NavController by lazy { findNavController() }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel = ViewModelProviders.of(
+            this,
+            viewModelFactory
+        ).get(BerryListViewModel::class.java)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = BerryListFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -44,8 +61,10 @@ class BerryListFragment : Fragment() {
 
             networkError.observe(viewLifecycleOwner, Observer {
                 android.widget.Toast.makeText(
-                    context, it
-                        ?: getString(R.string.message_generic_error), android.widget.Toast.LENGTH_SHORT
+                    context,
+                    it
+                        ?: getString(R.string.message_generic_error),
+                    android.widget.Toast.LENGTH_SHORT
                 ).show()
             })
 
@@ -56,7 +75,8 @@ class BerryListFragment : Fragment() {
     }
 
     private fun navigateToBerryDetail(item: GenericListItem) {
-        val direction = BerryListFragmentDirections.actionBerryListFragmentToBerryDetailFragment(item.url)
+        val direction =
+            BerryListFragmentDirections.actionBerryListFragmentToBerryDetailFragment(item.url)
         navController.navigate(direction)
     }
 }

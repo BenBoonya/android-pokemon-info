@@ -5,16 +5,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import com.benboonya.pokemoninfo.common.util.ViewModelFactory
 import com.benboonya.pokemoninfo.databinding.BerryDetailFragmentBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-class BerryDetailFragment : Fragment() {
+class BerryDetailFragment : DaggerFragment() {
 
     private lateinit var binding: BerryDetailFragmentBinding
 
-    private val viewModel: BerryDetailViewModel by viewModel()
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory<BerryDetailViewModel>
+    private lateinit var viewModel: BerryDetailViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel = ViewModelProviders.of(
+            this,
+            viewModelFactory
+        ).get(BerryDetailViewModel::class.java)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = BerryDetailFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel.apply {

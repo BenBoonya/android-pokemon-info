@@ -5,9 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.benboonya.pokemoninfo.berries.model.Berry
 import com.benboonya.pokemoninfo.berries.usecase.GetBerryDetailUseCase
+import javax.inject.Inject
 
-class BerryDetailViewModel(private val getBerryDetailUseCase: GetBerryDetailUseCase) : ViewModel() {
-
+class BerryDetailViewModel @Inject constructor(
+    private val getBerryDetailUseCase: GetBerryDetailUseCase
+) : ViewModel() {
 
     val berryDetail: MutableLiveData<Berry> = MutableLiveData()
 

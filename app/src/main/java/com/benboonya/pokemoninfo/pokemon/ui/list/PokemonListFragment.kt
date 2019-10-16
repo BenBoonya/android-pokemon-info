@@ -8,23 +8,41 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.benboonya.pokemoninfo.R
 import com.benboonya.pokemoninfo.common.model.GenericListItem
 import com.benboonya.pokemoninfo.common.ui.PagedItemListAdapter
+import com.benboonya.pokemoninfo.common.util.ViewModelFactory
 import com.benboonya.pokemoninfo.databinding.PokemonListFragmentBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-class PokemonListFragment : Fragment() {
+class PokemonListFragment : DaggerFragment() {
 
     lateinit var binding: PokemonListFragmentBinding
 
     private val navController: NavController by lazy { findNavController() }
 
-    val viewModel: PokemonListViewModel by viewModel()
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory<PokemonListViewModel>
+    private lateinit var viewModel: PokemonListViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel = ViewModelProviders.of(
+            this,
+            viewModelFactory
+        ).get(PokemonListViewModel::class.java)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = PokemonListFragmentBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -57,7 +75,8 @@ class PokemonListFragment : Fragment() {
     }
 
     private fun navigateToPokemonDetail(item: GenericListItem) {
-        val direction = PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailBottomSheet(item.url)
+        val direction =
+            PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailBottomSheet(item.url)
         navController.navigate(direction)
     }
 }

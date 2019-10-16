@@ -6,6 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -43,9 +45,11 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0-alpha05'
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0-alpha05'
 
-    //koin
-    implementation "org.koin:koin-androidx-scope:2.0.0"
-    implementation "org.koin:koin-androidx-viewmodel:2.0.0"
+    // Adds the core dagger library
+    implementation "com.google.dagger:dagger:2.24"
+    implementation "com.google.dagger:dagger-android-support:2.24"
+    kapt "com.google.dagger:dagger-compiler:2.24"
+    kapt "com.google.dagger:dagger-android-processor:2.24"
 
     //network
     implementation "com.squareup.retrofit2:retrofit:2.6.0"

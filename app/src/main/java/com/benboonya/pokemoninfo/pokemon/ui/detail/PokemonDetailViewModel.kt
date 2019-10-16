@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.benboonya.pokemoninfo.pokemon.model.Pokemon
 import com.benboonya.pokemoninfo.pokemon.usecase.GetPokemonDetailUseCase
+import javax.inject.Inject
 
-class PokemonDetailViewModel(
+class PokemonDetailViewModel @Inject constructor(
     private val getPokemonDetailUseCase: GetPokemonDetailUseCase
 ) : ViewModel() {
 
