@@ -3,10 +3,15 @@ package com.benboonya.pokemoninfo.pokemon.ui.detail
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.benboonya.pokemoninfo.pokemon.model.Pokemon
 import com.benboonya.pokemoninfo.pokemon.usecase.GetPokemonDetailUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PokemonDetailViewModel(
+@HiltViewModel
+class PokemonDetailViewModel @Inject constructor(
     private val getPokemonDetailUseCase: GetPokemonDetailUseCase
 ) : ViewModel() {
 
@@ -14,29 +19,13 @@ class PokemonDetailViewModel(
 
     val isLoading: MediatorLiveData<Boolean> = MediatorLiveData()
 
-    val errorMessage: MutableLiveData<String> = MutableLiveData()
-
     fun assignArgument(args: PokemonDetailBottomSheetDialogFragmentArgs) {
         getPokemonDetail(args.url)
     }
 
-    private fun getPokemonDetail(url: String) {
-
-        getPokemonDetailUseCase(url).let { liveData ->
-            isLoading.value = true
-            isLoading.addSource(liveData) {
-                isLoading.value = false
-                it.either(this::getPokemonDetailFail, this::getPokemonDetailSuccess)
-            }
-        }
+    private fun getPokemonDetail(url: String) = viewModelScope.launch {
+        isLoading.value = true
+        pokemonDetail.value = getPokemonDetailUseCase(url)
+        isLoading.value = false
     }
-
-    private fun getPokemonDetailSuccess(pokemon: Pokemon?) {
-        pokemonDetail.value = pokemon
-    }
-
-    private fun getPokemonDetailFail(message: String?) {
-        errorMessage.value = message
-    }
-
 }

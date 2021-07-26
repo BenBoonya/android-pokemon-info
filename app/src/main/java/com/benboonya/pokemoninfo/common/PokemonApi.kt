@@ -12,14 +12,14 @@ import retrofit2.http.Url
 interface PokemonApi {
 
     @GET("{data_type}")
-    fun getInitialDataList(@Path(value = "data_type") dataType: String): Call<PaginatedWrapper<GenericListItem>>
+    suspend fun getInitialDataList(@Path(value = "data_type") dataType: String): PaginatedWrapper<GenericListItem>
 
     @GET
-    fun getDataList(@Url url: String): Call<PaginatedWrapper<GenericListItem>>
+    suspend fun getDataList(@Url url: String): PaginatedWrapper<GenericListItem>
 
     @GET
-    fun getPokemonDetail(@Url url: String): Call<Pokemon>
+    suspend fun getPokemonDetail(@Url url: String): Pokemon
 
     @GET
-    fun getBerryDetail(@Url url: String): Call<Berry>
+    suspend fun getBerryDetail(@Url url: String): Berry
 }

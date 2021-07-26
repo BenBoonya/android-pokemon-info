@@ -4,26 +4,32 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.benboonya.pokemoninfo.R
 import com.benboonya.pokemoninfo.common.model.GenericListItem
 import com.benboonya.pokemoninfo.common.ui.PagedItemListAdapter
 import com.benboonya.pokemoninfo.databinding.BerryListFragmentBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class BerryListFragment : Fragment() {
 
     lateinit var binding: BerryListFragmentBinding
 
-    private val viewModel: BerryListViewModel by viewModel()
+    private val viewModel: BerryListViewModel by viewModels()
 
     private val navController: NavController by lazy { findNavController() }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = BerryListFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -31,32 +37,23 @@ class BerryListFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        attachObserver()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requestBerryData()
+
     }
 
-    private fun attachObserver() {
-        with(viewModel) {
-            isInitialLoading.observe(viewLifecycleOwner, Observer {
-                binding.progressBar.isVisible = it
-            })
-
-            networkError.observe(viewLifecycleOwner, Observer {
-                android.widget.Toast.makeText(
-                    context, it
-                        ?: getString(R.string.message_generic_error), android.widget.Toast.LENGTH_SHORT
-                ).show()
-            })
-
-            berryList.observe(viewLifecycleOwner, Observer {
-                binding.adapter?.submitList(it)
-            })
+    private fun requestBerryData() {
+        lifecycleScope.launch {
+            viewModel.berryListResult.collectLatest {
+                binding.adapter?.submitData(it)
+            }
         }
     }
 
     private fun navigateToBerryDetail(item: GenericListItem) {
-        val direction = BerryListFragmentDirections.actionBerryListFragmentToBerryDetailFragment(item.url)
+        val direction =
+            BerryListFragmentDirections.actionBerryListFragmentToBerryDetailFragment(item.url)
         navController.navigate(direction)
     }
 }

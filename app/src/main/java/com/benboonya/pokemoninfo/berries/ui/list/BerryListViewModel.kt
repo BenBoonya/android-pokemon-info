@@ -1,29 +1,18 @@
 package com.benboonya.pokemoninfo.berries.ui.list
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import androidx.paging.PagedList
+import androidx.lifecycle.*
+import androidx.paging.PagingData
 import com.benboonya.pokemoninfo.common.model.GenericListItem
-import com.benboonya.pokemoninfo.common.model.PagedListResult
 import com.benboonya.pokemoninfo.common.usecase.GetPagedListUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class BerryListViewModel(private val getPokemonListUseCase: GetPagedListUseCase) : ViewModel() {
+@HiltViewModel
+class BerryListViewModel @Inject constructor(
+    getBerryListUseCase: GetPagedListUseCase
+) : ViewModel() {
 
-    private val pagedListResult: MutableLiveData<PagedListResult<GenericListItem>> = MutableLiveData()
-
-    val berryList: LiveData<PagedList<GenericListItem>> = Transformations.switchMap(pagedListResult) { it.result }
-
-    val isInitialLoading: LiveData<Boolean> = Transformations.switchMap(pagedListResult) { it.isInitialLoading }
-
-    val networkError: LiveData<String?> = Transformations.switchMap(pagedListResult) { it.networkError }
-
-    init {
-        getBerryList()
-    }
-
-    fun getBerryList() {
-        pagedListResult.value = getPokemonListUseCase("berry")
-    }
+    val berryListResult: Flow<PagingData<GenericListItem>> =
+        getBerryListUseCase(viewModelScope, "berry")
 }

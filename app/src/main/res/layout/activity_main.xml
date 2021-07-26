@@ -22,7 +22,7 @@
                 android:background="?attr/colorPrimary"
                 android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
-            <fragment
+            <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/mainHostFragment"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"

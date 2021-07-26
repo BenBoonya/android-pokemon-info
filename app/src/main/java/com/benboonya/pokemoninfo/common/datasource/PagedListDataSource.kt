@@ -1,61 +1,39 @@
 package com.benboonya.pokemoninfo.common.datasource
 
-import androidx.lifecycle.MutableLiveData
-import androidx.paging.PageKeyedDataSource
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.benboonya.pokemoninfo.common.PokemonApi
-import com.benboonya.pokemoninfo.common.extension.enqueue
 import com.benboonya.pokemoninfo.common.model.GenericListItem
-import com.benboonya.pokemoninfo.common.util.SingleLiveEvent
+import java.lang.Exception
 
 class PagedListDataSource(
-        private val dataType: String,
-        private val api: PokemonApi
-) : PageKeyedDataSource<String, GenericListItem>() {
+    private val dataType: String,
+    private val api: PokemonApi
+) : PagingSource<String, GenericListItem>() {
 
-    val isLoading = MutableLiveData<Boolean>()
-
-    val isInitialLoading = MutableLiveData<Boolean>()
-
-    val networkError = SingleLiveEvent<String?>()
-
-    @Suppress("UNCHECKED_CAST")
-    override fun loadInitial(
-            params: LoadInitialParams<String>,
-            callback: LoadInitialCallback<String, GenericListItem>
-    ) {
-        isInitialLoading.postValue(true)
-        api.getInitialDataList(dataType).enqueue({
-            isInitialLoading.postValue(false)
-            it?.let { response ->
-                callback.onResult(response.results, 0, response.count, response.previous, response.next)
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, GenericListItem> {
+        return try {
+            val response = if (params.key != null) {
+                api.getDataList(params.key!!)
+            } else {
+                api.getInitialDataList(dataType)
             }
-        }, this::setInitialError)
+
+            LoadResult.Page(
+                data = response.results,
+                prevKey = null,
+                nextKey = response.next
+            )
+        } catch (e: Exception) {
+            LoadResult.Error(e)
+        }
     }
 
-    @Suppress("UNCHECKED_CAST")
-    override fun loadAfter(params: LoadParams<String>, callback: LoadCallback<String, GenericListItem>) {
-        isLoading.postValue(true)
-        api.getDataList(params.key).enqueue({
-            it?.let { response ->
-                isLoading.postValue(false)
-                callback.onResult(response.results, response.next)
-            }
-        }, this::setError)
+    override fun getRefreshKey(state: PagingState<String, GenericListItem>): String? {
+        //api return as url if refresh can not plus or minus
+        return state.anchorPosition?.let { anchorPosition ->
+            val anchorPage = state.closestPageToPosition(anchorPosition)
+            anchorPage?.prevKey ?: anchorPage?.nextKey
+        }
     }
-
-
-    override fun loadBefore(params: LoadParams<String>, callback: LoadCallback<String, GenericListItem>) {
-
-    }
-
-    private fun setInitialError(errorMessage: String?) {
-        isInitialLoading.postValue(false)
-        networkError.postValue(errorMessage)
-    }
-
-    private fun setError(errorMessage: String?) {
-        isLoading.postValue(false)
-        networkError.postValue(errorMessage)
-    }
-
 }

@@ -2,12 +2,12 @@ package com.benboonya.pokemoninfo.common.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import com.benboonya.pokemoninfo.common.model.GenericListItem
 import com.benboonya.pokemoninfo.databinding.GenericItemViewHolderBinding
 
 class PagedItemListAdapter(private val onItemClick: (GenericListItem) -> Unit) :
-    PagedListAdapter<GenericListItem, GenericItemViewHolder>(GenericListItem.DIFF_CALLBACK) {
+    PagingDataAdapter<GenericListItem, GenericItemViewHolder>(GenericListItem.DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericItemViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return GenericItemViewHolder(GenericItemViewHolderBinding.inflate(layoutInflater, parent, false)) {
