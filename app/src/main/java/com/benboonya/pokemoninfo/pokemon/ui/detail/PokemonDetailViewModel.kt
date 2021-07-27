@@ -1,6 +1,5 @@
 package com.benboonya.pokemoninfo.pokemon.ui.detail
 
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,13 +16,13 @@ class PokemonDetailViewModel @Inject constructor(
 
     val pokemonDetail: MutableLiveData<Pokemon> = MutableLiveData()
 
-    val isLoading: MediatorLiveData<Boolean> = MediatorLiveData()
+    val isLoading = MutableLiveData<Boolean>()
 
     fun assignArgument(args: PokemonDetailBottomSheetDialogFragmentArgs) {
         getPokemonDetail(args.url)
     }
 
-    private fun getPokemonDetail(url: String) = viewModelScope.launch {
+    fun getPokemonDetail(url: String) = viewModelScope.launch {
         isLoading.value = true
         pokemonDetail.value = getPokemonDetailUseCase(url)
         isLoading.value = false
