@@ -26,4 +26,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso.idling:idling-concurrent:3.4.0'
 
     androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.4.0'
+
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.0.0'
 }
