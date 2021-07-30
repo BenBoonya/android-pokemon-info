@@ -21,7 +21,7 @@ class PagedListDataSource(
 
             LoadResult.Page(
                 data = response.results,
-                prevKey = null,
+                prevKey = response.previous,
                 nextKey = response.next
             )
         } catch (e: Exception) {
@@ -30,7 +30,6 @@ class PagedListDataSource(
     }
 
     override fun getRefreshKey(state: PagingState<String, GenericListItem>): String? {
-        //api return as url if refresh can not plus or minus
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey ?: anchorPage?.nextKey
