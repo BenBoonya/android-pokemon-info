@@ -18,7 +18,10 @@ import com.benboonya.pokemoninfo.common.model.GenericListItem
 import kotlinx.coroutines.flow.Flow
 
 @Composable
-fun PaginatedList (items: Flow<PagingData<GenericListItem>>) {
+fun PaginatedList(
+    items: Flow<PagingData<GenericListItem>>,
+    onItemClicked: (String) -> Unit,
+) {
     val lazyPokemonItem = items.collectAsLazyPagingItems()
 
     LazyColumn(
@@ -27,19 +30,22 @@ fun PaginatedList (items: Flow<PagingData<GenericListItem>>) {
             .padding(8.dp),
     ) {
         items(lazyPokemonItem) { item ->
-            item?.let { PagedItemView(item = it) }
+            item?.let { PagedItemView(item = it, onItemClicked) }
         }
     }
 }
 
 @Composable
-fun PagedItemView(item: GenericListItem) {
+fun PagedItemView(
+    item: GenericListItem,
+    onItemClicked: (String) -> Unit,
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .clickable {
-
+                onItemClicked(item.url)
             },
         elevation = 4.dp
     ) {

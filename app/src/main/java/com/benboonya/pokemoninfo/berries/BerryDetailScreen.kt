@@ -1,6 +1,4 @@
 package com.benboonya.pokemoninfo.berries
-
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -11,11 +9,12 @@ import androidx.compose.ui.unit.dp
 import com.benboonya.pokemoninfo.berries.model.Berry
 import com.benboonya.pokemoninfo.berries.ui.detail.BerryDetailViewModel
 
-
 @Composable
 fun BerryDetailScreen(
-    viewModel: BerryDetailViewModel
+    viewModel: BerryDetailViewModel,
+    url: String,
 ) {
+    viewModel.getBerryDetail(url)
     val isLoading: Boolean by viewModel.isLoading.observeAsState(initial = false)
     val berry: Berry? by viewModel.berryDetail.observeAsState()
 

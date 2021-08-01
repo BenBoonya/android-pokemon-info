@@ -22,7 +22,7 @@ class BerryDetailViewModel @Inject constructor(
         getBerryDetail(args.url)
     }
 
-    private fun getBerryDetail(url: String) = viewModelScope.launch {
+    fun getBerryDetail(url: String) = viewModelScope.launch {
         isLoading.value = true
         berryDetail.value = getBerryDetailUseCase(url)
         isLoading.value = false

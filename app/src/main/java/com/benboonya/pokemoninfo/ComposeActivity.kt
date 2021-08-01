@@ -12,17 +12,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.viewModels
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
+import com.benboonya.pokemoninfo.berries.BerryDetailScreen
+import com.benboonya.pokemoninfo.berries.BerryDetailView
 import com.benboonya.pokemoninfo.berries.BerryScreen
+import com.benboonya.pokemoninfo.berries.ui.detail.BerryDetailViewModel
 import com.benboonya.pokemoninfo.berries.ui.list.BerryListViewModel
+import com.benboonya.pokemoninfo.common.BERRY_DETAIL
+import com.benboonya.pokemoninfo.common.POKEMON_DETAIL
 import com.benboonya.pokemoninfo.common.ui.accent
 import com.benboonya.pokemoninfo.common.ui.primary
 import com.benboonya.pokemoninfo.common.ui.primaryDark
 import com.benboonya.pokemoninfo.drawer.Drawer
 import com.benboonya.pokemoninfo.drawer.DrawerScreens
+import com.benboonya.pokemoninfo.pokemon.PokemonDetailScreen
 import com.benboonya.pokemoninfo.pokemon.PokemonScreen
+import com.benboonya.pokemoninfo.pokemon.ui.detail.PokemonDetailViewModel
 import com.benboonya.pokemoninfo.pokemon.ui.list.PokemonListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -86,7 +95,17 @@ class ComposeActivity : AppCompatActivity() {
                                 openDrawer()
                             },
                             viewModel,
+                            navController,
                         )
+                    }
+                    composable(
+                        POKEMON_DETAIL,
+                        arguments = listOf(navArgument("url") { type = NavType.StringType })
+                    ) { backStackEntry ->
+                        backStackEntry.arguments?.getString("url")?.let {
+                            val viewModel = hiltViewModel<PokemonDetailViewModel>()
+                            PokemonDetailScreen(viewModel = viewModel, url = it)
+                        }
                     }
                     composable(DrawerScreens.Berry.route) {
                         val viewModel = hiltViewModel<BerryListViewModel>()
@@ -95,7 +114,17 @@ class ComposeActivity : AppCompatActivity() {
                                 openDrawer()
                             },
                             viewModel,
+                            navController,
                         )
+                    }
+                    composable(
+                        BERRY_DETAIL,
+                        arguments = listOf(navArgument("url") { type = NavType.StringType })
+                    ) { backStackEntry ->
+                        backStackEntry.arguments?.getString("url")?.let {
+                            val viewModel = hiltViewModel<BerryDetailViewModel>()
+                            BerryDetailScreen(viewModel = viewModel, url = it)
+                        }
                     }
                 }
             }

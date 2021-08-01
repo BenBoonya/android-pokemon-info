@@ -14,8 +14,10 @@ import com.benboonya.pokemoninfo.pokemon.ui.detail.PokemonDetailViewModel
 
 @Composable
 fun PokemonDetailScreen(
-    viewModel: PokemonDetailViewModel
+    viewModel: PokemonDetailViewModel,
+    url: String,
 ) {
+    viewModel.getPokemonDetail(url)
     val isLoading: Boolean by viewModel.isLoading.observeAsState(initial = false)
     val pokemon: Pokemon? by viewModel.pokemonDetail.observeAsState()
 

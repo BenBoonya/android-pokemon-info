@@ -6,7 +6,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import com.benboonya.pokemoninfo.berries.ui.list.BerryListViewModel
+import com.benboonya.pokemoninfo.common.getBerryDetailRoute
 import com.benboonya.pokemoninfo.common.ui.PaginatedList
 import com.benboonya.pokemoninfo.drawer.TopBar
 
@@ -14,6 +16,7 @@ import com.benboonya.pokemoninfo.drawer.TopBar
 fun BerryScreen(
     openDrawer: () -> Unit,
     viewModel: BerryListViewModel,
+    navController: NavController,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         TopBar(
@@ -24,6 +27,8 @@ fun BerryScreen(
 
         PaginatedList(
             viewModel.berryListResult
-        )
+        ) {
+            navController.navigate(getBerryDetailRoute(it))
+        }
     }
 }
