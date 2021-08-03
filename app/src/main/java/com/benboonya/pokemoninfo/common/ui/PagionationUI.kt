@@ -11,6 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
@@ -45,7 +46,7 @@ fun PagedItemView(
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .clickable {
-                onItemClicked(item.url)
+                onItemClicked(item.url.toUri().lastPathSegment ?: "0")
             },
         elevation = 4.dp
     ) {

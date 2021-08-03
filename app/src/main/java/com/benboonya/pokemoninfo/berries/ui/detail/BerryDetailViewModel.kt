@@ -18,10 +18,6 @@ class BerryDetailViewModel @Inject constructor(
 
     val isLoading: MediatorLiveData<Boolean> = MediatorLiveData()
 
-    fun assignArgument(args: BerryDetailFragmentArgs) {
-        getBerryDetail(args.url)
-    }
-
     fun getBerryDetail(url: String) = viewModelScope.launch {
         isLoading.value = true
         berryDetail.value = getBerryDetailUseCase(url)

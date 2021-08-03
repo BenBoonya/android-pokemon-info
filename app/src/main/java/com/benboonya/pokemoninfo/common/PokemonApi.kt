@@ -17,9 +17,9 @@ interface PokemonApi {
     @GET
     suspend fun getDataList(@Url url: String): PaginatedWrapper<GenericListItem>
 
-    @GET
-    suspend fun getPokemonDetail(@Url url: String): Pokemon
+    @GET("pokemon/{id}")
+    suspend fun getPokemonDetail(@Path("id") id: String): Pokemon
 
-    @GET
-    suspend fun getBerryDetail(@Url url: String): Berry
+    @GET("berry/{id}")
+    suspend fun getBerryDetail(@Path("id") id: String): Berry
 }

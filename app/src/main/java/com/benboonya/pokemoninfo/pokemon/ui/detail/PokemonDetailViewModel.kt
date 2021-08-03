@@ -20,11 +20,6 @@ class PokemonDetailViewModel @Inject constructor(
     private val _isLoading = MutableLiveData(false)
     val isLoading : LiveData<Boolean> = _isLoading
 
-
-    fun assignArgument(args: PokemonDetailBottomSheetDialogFragmentArgs) {
-        getPokemonDetail(args.url)
-    }
-
     fun getPokemonDetail(url: String) = viewModelScope.launch {
         _isLoading.value = true
         pokemonDetail.value = getPokemonDetailUseCase(url)

@@ -8,9 +8,9 @@ class PokemonRepository @Inject constructor(
     private val api: PokemonApi
 ) {
 
-    suspend fun getPokemonDetail(url: String): Pokemon? {
+    suspend fun getPokemonDetail(id: String): Pokemon? {
         return try {
-            val response = api.getPokemonDetail(url)
+            val response = api.getPokemonDetail(id)
             response
         } catch (ex: Exception) {
             null

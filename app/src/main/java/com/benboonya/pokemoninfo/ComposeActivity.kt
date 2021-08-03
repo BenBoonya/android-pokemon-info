@@ -98,13 +98,14 @@ class ComposeActivity : AppCompatActivity() {
                             navController,
                         )
                     }
-                    composable(
-                        POKEMON_DETAIL,
-                        arguments = listOf(navArgument("url") { type = NavType.StringType })
-                    ) { backStackEntry ->
+                    composable(POKEMON_DETAIL) { backStackEntry ->
                         backStackEntry.arguments?.getString("url")?.let {
                             val viewModel = hiltViewModel<PokemonDetailViewModel>()
-                            PokemonDetailScreen(viewModel = viewModel, url = it)
+                            PokemonDetailScreen(
+                                viewModel = viewModel,
+                                navController = navController,
+                                url = it,
+                            )
                         }
                     }
                     composable(DrawerScreens.Berry.route) {
@@ -117,13 +118,14 @@ class ComposeActivity : AppCompatActivity() {
                             navController,
                         )
                     }
-                    composable(
-                        BERRY_DETAIL,
-                        arguments = listOf(navArgument("url") { type = NavType.StringType })
-                    ) { backStackEntry ->
+                    composable(BERRY_DETAIL) { backStackEntry ->
                         backStackEntry.arguments?.getString("url")?.let {
                             val viewModel = hiltViewModel<BerryDetailViewModel>()
-                            BerryDetailScreen(viewModel = viewModel, url = it)
+                            BerryDetailScreen(
+                                viewModel = viewModel,
+                                navController = navController,
+                                url = it
+                            )
                         }
                     }
                 }
