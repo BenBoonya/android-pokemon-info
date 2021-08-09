@@ -1,7 +1,6 @@
 package com.benboonya.pokemoninfo.pokemon
 
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -15,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.benboonya.pokemoninfo.pokemon.model.Pokemon
 import com.benboonya.pokemoninfo.pokemon.ui.detail.PokemonDetailViewModel
-import java.util.*
 
 
 @Composable

@@ -38,7 +38,7 @@ fun Drawer(
             Row(
                 modifier = Modifier.clickable {
                     onDestinationClicked(screen.route)
-                }.padding(4.dp).fillMaxWidth(),
+                }.padding(12.dp).fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
@@ -46,7 +46,7 @@ fun Drawer(
                     contentDescription = screen.title
                 )
 
-                Spacer(modifier = modifier.width(8.dp))
+                Spacer(modifier = modifier.width(12.dp))
 
                 Text(
                     text = screen.title,
